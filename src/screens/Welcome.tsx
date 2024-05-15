@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Pressable, StatusBar } from "react-native";
+import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
 import { StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "@/app/(tabs)";
@@ -12,7 +12,7 @@ const Welcome = ({ navigation }: WelcomeProps) => {
         style={styles.button}
         onPress={() => navigation.navigate("Home")}
       >
-        <Text>Go to Home</Text>
+        <Text style={styles.btnText}>Go to Home</Text>
       </Pressable>
     </View>
   );
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop: StatusBar.currentHeight,
     justifyContent: "center",
   },
   button: {
@@ -32,5 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: "tomato",
     borderRadius: 10,
     paddingHorizontal: 50,
+  },
+  btnText: {
+    fontSize: 24,
+    color: "white",
+    fontWeight: "500",
   },
 });

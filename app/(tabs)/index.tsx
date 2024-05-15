@@ -3,8 +3,11 @@ import Welcome from "@/src/screens/Welcome";
 import Home from "../../src/screens/Home";
 import ProductList from "@/src/screens/ProductList";
 import ProductDetail from "@/src/screens/ProductDetail";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+  HeaderStyleInterpolators,
+} from "@react-navigation/stack";
 
 export type RootStackParamList = {
   Welcome: undefined;
@@ -32,12 +35,17 @@ export default function HomeScreen() {
         options={{
           title: "Home Screen",
           cardShadowEnabled: true,
+          headerStyleInterpolator: HeaderStyleInterpolators.forSlideRight,
         }}
         name="Home"
         component={Home}
       />
       <Stack.Screen
-        options={{ title: "Product List" }}
+        options={{
+          title: "Product List",
+          cardStyleInterpolator:
+            CardStyleInterpolators.forFadeFromBottomAndroid,
+        }}
         name="ProductList"
         component={ProductList}
       />

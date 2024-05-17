@@ -1,8 +1,8 @@
 import "react-native-gesture-handler";
+import SplashScreen from "@/src/screens/SplashScreen";
+import Register from "../../src/screens/Register";
 import Welcome from "@/src/screens/Welcome";
-import Home from "../../src/screens/Home";
-import ProductList from "@/src/screens/ProductList";
-import ProductDetail from "@/src/screens/ProductDetail";
+import Login from "@/src/screens/Login";
 import {
   createStackNavigator,
   CardStyleInterpolators,
@@ -10,49 +10,49 @@ import {
 } from "@react-navigation/stack";
 
 export type RootStackParamList = {
+  SplashScreen: undefined;
+  Register: undefined;
+  Login: undefined;
   Welcome: undefined;
-  Home: undefined;
-  ProductList: undefined;
-  ProductDetail: undefined;
 };
 
 export default function HomeScreen() {
   const Stack = createStackNavigator<RootStackParamList>();
   return (
     <Stack.Navigator
-      initialRouteName="Welcome"
+      initialRouteName="SplashScreen"
       screenOptions={{
         headerTintColor: "white",
-        headerStyle: { backgroundColor: "tomato" },
+        headerStyle: { backgroundColor: "#50C2C9" },
       }}
     >
       <Stack.Screen
-        options={{ title: "Welcome Screen", cardShadowEnabled: true }}
-        name="Welcome"
-        component={Welcome}
+        options={{ title: "Getting Started", cardShadowEnabled: true }}
+        name="SplashScreen"
+        component={SplashScreen}
       />
       <Stack.Screen
         options={{
-          title: "Home Screen",
+          title: "Register",
           cardShadowEnabled: true,
           headerStyleInterpolator: HeaderStyleInterpolators.forSlideRight,
         }}
-        name="Home"
-        component={Home}
+        name="Register"
+        component={Register}
       />
       <Stack.Screen
         options={{
-          title: "Product List",
+          title: "Login",
           cardStyleInterpolator:
             CardStyleInterpolators.forFadeFromBottomAndroid,
         }}
-        name="ProductList"
-        component={ProductList}
+        name="Login"
+        component={Login}
       />
       <Stack.Screen
-        options={{ title: "Product Detail" }}
-        name="ProductDetail"
-        component={ProductDetail}
+        options={{ title: "Welcome" }}
+        name="Welcome"
+        component={Welcome}
       />
     </Stack.Navigator>
   );

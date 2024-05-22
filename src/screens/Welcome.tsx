@@ -1,103 +1,109 @@
-import { StyleSheet, Text, View, Pressable, Image } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  Image,
+  ScrollView,
+} from "react-native";
+import React, { useState } from "react";
 import { StackScreenProps } from "@react-navigation/stack";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { RootStackParamList } from "@/app/(tabs)";
+import { FlatList, TextInput } from "react-native-gesture-handler";
 
 type WelcomeProps = StackScreenProps<RootStackParamList, "Welcome">;
 
-const Welcome = ({ navigation }: WelcomeProps) => {
+const Welcome = ({ route }: WelcomeProps) => {
+  const [newTask, setNewTask] = useState("");
+  const taskList = [
+    "Learning Programming by 12PM",
+    "Learn how to cook by 1PM",
+    "Learn how to play at 2PM",
+  ];
+
+  const addTask = () => {};
   return (
-    <View style={styles.container}>
-      <View style={styles.subContainer}>
-        <View style={styles.profile}>
-          <Image
-            style={styles.shape}
-            source={require("../../assets/images/shape.png")}
-          />
+    <ScrollView>
+      <View style={styles.container}>
+        <Image
+          style={styles.shape}
+          source={require("../../assets/images/shape.png")}
+        />
 
-          <Image
-            style={styles.user}
-            source={{ uri: "../../assets/images/favicon.png" }}
-          />
-          <Text style={styles.newuser}>Welcome New User</Text>
-        </View>
-        <View style={styles.timeCard}>
-          <Text style={styles.time}>Good Afternoon</Text>
-          <Image
-            style={styles.clock}
-            source={require("../../assets/images/clock.png")}
-          />
-
-          <Text style={styles.task}>Task List</Text>
-        </View>
-        <View style={styles.taskCard}>
-          <View style={styles.header}>
-            <Text style={styles.task}>Daily Task</Text>
-            <Text style={styles.plus}>+</Text>
+        <View style={styles.subContainer}>
+          <View style={styles.profile}>
+            <Image
+              style={styles.user}
+              source={require("../../assets/images/user.png")}
+            />
+            <Text style={styles.newuser}>Welcome {route.params.username}</Text>
           </View>
-          <View style={styles.checkbox}>
-            <BouncyCheckbox
-              size={25}
-              fillColor="green"
-              unFillColor="#FFFFFF"
-              text="Learning Programming by 12PM"
-              iconStyle={{ borderColor: "green" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              onPress={(isChecked: boolean) => {
-                console.log(isChecked);
-              }}
+          <View style={styles.timeCard}>
+            <Text style={styles.time}>Good Afternoon</Text>
+            <Image
+              style={styles.clock}
+              source={require("../../assets/images/clock.png")}
             />
 
-            <BouncyCheckbox
-              size={25}
-              fillColor="green"
-              unFillColor="#FFFFFF"
-              text="Learn how to cook by 1PM"
-              iconStyle={{ borderColor: "green" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              onPress={(isChecked: boolean) => {
-                console.log(isChecked);
-              }}
-            />
+            <Text style={styles.task}>Task List</Text>
+          </View>
+          <View style={styles.taskCard}>
+            <View style={styles.header}>
+              <Text style={styles.task}>Daily Task</Text>
+              <Text style={styles.plus}>+</Text>
+            </View>
 
-            <BouncyCheckbox
-              size={25}
-              fillColor="green"
-              unFillColor="#FFFFFF"
-              text="Learn how to play at 2PM"
-              iconStyle={{ borderColor: "green" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              onPress={(isChecked: boolean) => {
-                console.log(isChecked);
-              }}
-            />
-            <BouncyCheckbox
-              size={25}
-              fillColor="green"
-              unFillColor="#FFFFFF"
-              text="Have lunch at 4PM"
-              iconStyle={{ borderColor: "green" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              onPress={(isChecked: boolean) => {
-                console.log(isChecked);
-              }}
-            />
-            <BouncyCheckbox
-              size={25}
-              fillColor="green"
-              unFillColor="#FFFFFF"
-              text="Going to travel 6PM"
-              iconStyle={{ borderColor: "green" }}
-              innerIconStyle={{ borderWidth: 2 }}
-              onPress={(isChecked: boolean) => {
-                console.log(isChecked);
-              }}
-            />
+            <View>
+              {taskList.map((task, id) => (
+                <BouncyCheckbox
+                  style={styles.checkbox}
+                  key={id}
+                  size={25}
+                  fillColor="green"
+                  unFillColor="#FFFFFF"
+                  text={task}
+                  iconStyle={{ borderColor: "green" }}
+                  innerIconStyle={{ borderWidth: 2 }}
+                  onPress={(isChecked: boolean) => {
+                    console.log("task no", id);
+                  }}
+                />
+              ))}
+
+              {/* <FlatList
+                data={taskList}
+                keyExtractor={(index) => index.toString()}
+                renderItem={({ index }) => (
+                  <BouncyCheckbox
+                    style={styles.checkbox}
+                    key={index}
+                    size={25}
+                    fillColor="green"
+                    unFillColor="#FFFFFF"
+                    text={taskList[index]}
+                    iconStyle={{ borderColor: "green" }}
+                    innerIconStyle={{ borderWidth: 2 }}
+                    onPress={(isChecked: boolean) => {
+                      console.log(isChecked);
+                    }}
+                  />
+                )}
+              /> */}
+              <TextInput
+                style={styles.input}
+                placeholder="Add new task"
+                value={newTask}
+                onChangeText={setNewTask}
+              />
+              <Pressable style={styles.button} onPress={addTask}>
+                <Text style={styles.btnText}>Add Task</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -118,31 +124,32 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   shape: {
-    width: 200,
-    height: 183,
+    width: 150,
+    height: 135,
     objectFit: "contain",
   },
   profile: {
-    backgroundColor: "#50C2C9",
     width: "100%",
     padding: 10,
+    alignItems: "center",
   },
   newuser: {
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
-    color: "white",
   },
   button: {
-    padding: 15,
+    padding: 10,
     backgroundColor: "#50C2C9",
     borderRadius: 10,
-    paddingHorizontal: 50,
+    width: 150,
+    alignSelf: "center",
   },
   btnText: {
-    fontSize: 24,
+    fontSize: 20,
     color: "white",
     fontWeight: "500",
+    textAlign: "center",
   },
   timeCard: {
     width: "100%",
@@ -152,8 +159,17 @@ const styles = StyleSheet.create({
     textAlign: "right",
     fontWeight: "bold",
   },
-
+  input: {
+    alignItems: "stretch",
+    padding: 10,
+    paddingLeft: 15,
+    borderRadius: 30,
+    backgroundColor: "#ebf5ee",
+    margin: 10,
+    fontSize: 18,
+  },
   taskCard: {
+    marginBottom: 50,
     backgroundColor: "white",
     borderRadius: 20,
     padding: 20,
@@ -168,8 +184,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   checkbox: {
-    margin: 20,
-    gap: 10,
+    padding: 10,
   },
   plus: {
     textAlign: "right",
@@ -187,7 +202,9 @@ const styles = StyleSheet.create({
     height: 100,
   },
   clock: {
-    width: 200,
-    height: 100,
+    flex: 1,
+
+    objectFit: "contain",
+    alignSelf: "center",
   },
 });

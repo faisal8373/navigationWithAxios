@@ -13,7 +13,7 @@ export type RootStackParamList = {
   SplashScreen: undefined;
   Register: undefined;
   Login: undefined;
-  Welcome: undefined;
+  Welcome: { username: string; token: string };
 };
 
 export default function HomeScreen() {

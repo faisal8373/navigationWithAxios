@@ -1,0 +1,11 @@
+https://complete-todolist.onrender.com
+
+router.route("/register").post(registerUser);
+router.route("/login").post(loginUser);
+router.route("/logout").post(isAuthenticated,logoutUser);
+router.route("/addtask").post(isAuthenticated, addTask);
+router.route("/removeTask/:taskId").delete(isAuthenticated, removeTask);
+router.route("/updatetask/:taskId").put(isAuthenticated, updateTask);
+router.route("/me").get(isAuthenticated, getProfile);
+router.route("/updatePassword").post(isAuthenticated, updatePassword)
+router.route("/updateProfile").put(isAuthenticated,updateProfile ) 

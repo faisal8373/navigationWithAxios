@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "412223466895",
+    "project_id": "navigation-with-axios",
+    "storage_bucket": "navigation-with-axios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:412223466895:android:40607680e145cacbb2affa",
+        "android_client_info": {
+          "package_name": "com.navigationWithAxios"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDtcAZ9UDEey78kO16mewccSGXUeSEfUrY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

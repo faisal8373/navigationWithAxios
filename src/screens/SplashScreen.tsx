@@ -8,17 +8,19 @@ type SplashProps = StackScreenProps<RootStackParamList, "SplashScreen">;
 const SplashScreen = ({ navigation }: SplashProps) => {
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.shape}
-        source={require("../../assets/images/shape.png")}
-      />
+      <View style={styles.topImage}>
+        <Image
+          style={styles.shape}
+          source={require("../../assets/images/shape.png")}
+        />
+      </View>
       <View style={styles.subContainer}>
         <Image
           style={styles.image}
           source={require("../../assets/images/getting_started.png")}
         />
         <View style={styles.textContainer}>
-          <Text style={styles.heading}>Gets things with TODs</Text>
+          <Text style={styles.heading}>Get things with TODO</Text>
           <Text style={styles.paragraph}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit veniam
             facilis, quas suscipit unde accusantium error aut voluptate dolores
@@ -48,19 +50,23 @@ const styles = StyleSheet.create({
     // justifyContent: "space-evenly",
     // borderWidth: 3,
   },
+  topImage: {
+    flex: 0.5,
+  },
+
   subContainer: {
+    marginBottom: 50,
     flex: 2,
     alignItems: "center",
     justifyContent: "space-evenly",
   },
   shape: {
-    width: 200,
-    height: 183,
+    width: 150,
+    height: 135,
     objectFit: "contain",
   },
+
   image: {
-    width: 350,
-    height: 180,
     objectFit: "contain",
   },
   button: {

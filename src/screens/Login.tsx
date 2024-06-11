@@ -93,7 +93,7 @@ const Login = ({ navigation }: LoginProps) => {
             token: response.data.token,
           });
 
-          console.log(response.data.token);
+          // console.log(response.data.token);
 
           setToken(response.data.token);
         }

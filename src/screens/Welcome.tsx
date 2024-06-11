@@ -6,23 +6,85 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StackScreenProps } from "@react-navigation/stack";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import { RootStackParamList } from "@/app/(tabs)";
 import { FlatList, TextInput } from "react-native-gesture-handler";
+import axios from "axios";
 
 type WelcomeProps = StackScreenProps<RootStackParamList, "Welcome">;
 
 const Welcome = ({ route }: WelcomeProps) => {
   const [newTask, setNewTask] = useState("");
-  const taskList = [
+  const [tasks, setTasks] = useState([
     "Learning Programming by 12PM",
     "Learn how to cook by 1PM",
     "Learn how to play at 2PM",
-  ];
+  ]);
+  const [id, setId] = useState(tasks.length + 1);
 
-  const addTask = () => {};
+  const sendTaskToApi = async () => {
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "https://complete-todolist.onrender.com/api/v1/addtask",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${route.params.token}`,
+      },
+      data: {
+        name: "Faisal",
+        email: "sdfadf",
+        password: "12345678",
+        task: newTask,
+      },
+    };
+    axios
+      .request(config)
+      .then((response) => {
+        // console.log(response.status);
+        // console.log(response.data.taskData[0]._id);
+
+        setNewTask("");
+      })
+      .catch((error) => {
+        console.log("Failed ", error.response);
+      });
+    // const config = {
+    //   headers: {
+    //     Authorization: route.params.token,
+    //   },
+    // };
+    // try {
+    //   const response = await axios.post(
+    //     "https://complete-todolist.onrender.com/api/v1/addtask",
+    //     newTask,
+    //     config
+    //   );
+    //   console.log(response);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
+
+  const addTask = () => {
+    if (newTask) {
+      let arr = [...tasks];
+      arr.push(newTask);
+      setTasks(arr);
+      sendTaskToApi();
+      // setNewTask("");
+    }
+  };
+  const removeTask = () => {
+    let arr = [...tasks];
+    arr.splice(id, 1);
+    setTasks(arr);
+    setId(tasks.length + 10);
+    // console.log(index);
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -55,18 +117,18 @@ const Welcome = ({ route }: WelcomeProps) => {
             </View>
 
             <View>
-              {taskList.map((task, id) => (
+              {tasks.map((task, index) => (
                 <BouncyCheckbox
                   style={styles.checkbox}
-                  key={id}
+                  key={index}
                   size={25}
                   fillColor="green"
                   unFillColor="#FFFFFF"
                   text={task}
                   iconStyle={{ borderColor: "green" }}
                   innerIconStyle={{ borderWidth: 2 }}
-                  onPress={(isChecked: boolean) => {
-                    console.log("task no", id);
+                  onPress={() => {
+                    setId(index);
                   }}
                 />
               ))}
@@ -96,9 +158,14 @@ const Welcome = ({ route }: WelcomeProps) => {
                 value={newTask}
                 onChangeText={setNewTask}
               />
-              <Pressable style={styles.button} onPress={addTask}>
-                <Text style={styles.btnText}>Add Task</Text>
-              </Pressable>
+              <View style={styles.actionBtns}>
+                <Pressable style={styles.button} onPress={addTask}>
+                  <Text style={styles.btnText}>Add Task</Text>
+                </Pressable>
+                <Pressable style={styles.button} onPress={removeTask}>
+                  <Text style={styles.btnText}>Remove Task</Text>
+                </Pressable>
+              </View>
             </View>
           </View>
         </View>
@@ -206,5 +273,9 @@ const styles = StyleSheet.create({
 
     objectFit: "contain",
     alignSelf: "center",
+  },
+  actionBtns: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
 });
